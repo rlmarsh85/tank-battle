@@ -19,6 +19,25 @@ public:
 	ATank* GetControlledTank() const;
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+	
+
+private:
+	/// Start the tank moving the barrel towards the crosshair, so that shows will hit where crossahirs intersects the world
+	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector& Hitlocation);
+
+	bool GetLookDirection(FVector2D& ScreenLocation, FVector& LookDirection) const;
+
+	UPROPERTY(EditAnywhere)	
+	float CrossHairXLocation = 0.5f;
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.33f;
+
+
 	
 };
 
