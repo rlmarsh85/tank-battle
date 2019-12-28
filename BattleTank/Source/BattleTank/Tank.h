@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 100000.0f; //TODO: Find sensible default
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	virtual void Fire();
+
 
 private:
 	// Sets default values for this pawn's properties
@@ -44,6 +47,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+
 
 
 

@@ -22,6 +22,11 @@ void ATank::BeginPlay()
 	
 }
 
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Firing tank"))
+}
+
 
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)

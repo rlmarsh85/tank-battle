@@ -30,7 +30,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
-	if (!Barrel) { return;  }
+	if (!Barrel || !Turret) { return;  }
 	auto ComponentOwner = GetOwner();
 
 	auto BarrelLocation = Barrel->GetComponentLocation();
@@ -49,17 +49,14 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 			0.0f,
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		);
-	auto Time = GetWorld()->GetTimeSeconds();
+
 	if(bHaveAimSolution) {
 
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
 		MoveTurret(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found at %s"), Time, *AimDirection.ToString());
 	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution"), Time);
-	}
+
 }
 
 
@@ -78,7 +75,6 @@ void UTankAimingComponent::MoveTurret(FVector & AimDirection)
 	auto TurretRotation = Turret->GetRelativeRotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - TurretRotation;
-	UE_LOG(LogTemp, Warning, TEXT("DeltaRotation: %s"), *DeltaRotation.ToString());
 	
 	if (DeltaRotation.Yaw >= 180) {
 		DeltaRotation.Yaw = DeltaRotation.Yaw - 360;
@@ -86,8 +82,6 @@ void UTankAimingComponent::MoveTurret(FVector & AimDirection)
 	if (DeltaRotation.Yaw <= -180) {
 		DeltaRotation.Yaw = DeltaRotation.Yaw + 360;
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Updated DeltaRotation: %s"), *DeltaRotation.ToString());	
 
 	Turret->RotateTurret(DeltaRotation.Yaw);
 }
