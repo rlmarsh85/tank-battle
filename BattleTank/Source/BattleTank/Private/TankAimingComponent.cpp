@@ -6,6 +6,7 @@
 #include "Containers/Set.h" 
 #include "Kismet/GameplayStatics.h" 
 #include "Public/TankBarrel.h"
+#include "Public/TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -20,6 +21,11 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
@@ -48,6 +54,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
+		MoveTurret(AimDirection);
 		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found at %s"), Time, *AimDirection.ToString());
 	}
 	else {
@@ -58,12 +65,29 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrel(FVector& AimDirection) {
 
-	//Get the barrel
-	auto BarrelRoation = Barrel->GetForwardVector().Rotation();
+
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotation = AimAsRotator - BarrelRoation;
+	auto DeltaRotation = AimAsRotator - BarrelRotation;
 
 	Barrel->ElevateBarrel(DeltaRotation.Pitch);
-	UE_LOG(LogTemp, Warning, TEXT("Aim Rotation: %s"), *AimAsRotator.ToString());
+}
 
+void UTankAimingComponent::MoveTurret(FVector & AimDirection)
+{
+	auto TurretRotation = Turret->GetRelativeRotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotation = AimAsRotator - TurretRotation;
+	UE_LOG(LogTemp, Warning, TEXT("DeltaRotation: %s"), *DeltaRotation.ToString());
+	
+	if (DeltaRotation.Yaw >= 180) {
+		DeltaRotation.Yaw = DeltaRotation.Yaw - 360;
+	}
+	if (DeltaRotation.Yaw <= -180) {
+		DeltaRotation.Yaw = DeltaRotation.Yaw + 360;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Updated DeltaRotation: %s"), *DeltaRotation.ToString());	
+
+	Turret->RotateTurret(DeltaRotation.Yaw);
 }
