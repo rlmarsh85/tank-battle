@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+
 #include "TankPlayerController.h"
 #include "Engine/World.h"
-
-
+#include "Tank.h"
 
 
 ATank* ATankPlayerController::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());;
+	return Cast<ATank>(GetPawn());
 }
 
 
@@ -46,7 +46,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	FVector HitLocation;
 
 	if (GetSightRayHitLocation(HitLocation)) {
-		 UE_LOG(LogTemp, Warning, TEXT("HitLocation:%s"), *HitLocation.ToString())
+		GetControlledTank()->AimAt(HitLocation);
 	}
 
 }

@@ -4,11 +4,20 @@
 #include "Public/TankAIController.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "Tank.h"
 
 
 
 ATank* ATankAIController::GetControlledTank() const {
 	return Cast<ATank>(GetPawn());
+}
+
+void ATankAIController::Tick(float DeltaTime) {
+
+	Super::Tick(DeltaTime);
+
+	AimTowardsPlayer();
+
 }
 
 
@@ -46,3 +55,9 @@ ATank* ATankAIController::GetPlayerTank() const
 	return PlayerTank;
 }
 
+void ATankAIController::AimTowardsPlayer() const {
+	ATank* PlayerTank = GetPlayerTank();
+	if (PlayerTank && GetControlledTank()) {
+		GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
+	}
+}
