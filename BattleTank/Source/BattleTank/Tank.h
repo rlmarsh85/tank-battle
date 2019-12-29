@@ -29,8 +29,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.0f; //TODO: Find sensible default
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000.0f; //TODO: Find sensible default
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	virtual void Fire();
@@ -45,13 +45,18 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float ReloadTimeSeconds = 3.0f;
+
+	double LastFireTime = 0;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 

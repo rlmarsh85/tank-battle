@@ -29,8 +29,8 @@ void ATank::BeginPlay()
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Firing tank"))
-
-	if (!Barrel) { return;  }
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeSeconds;
+	if (!Barrel || !isReloaded) { return;  }
 	
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint,
@@ -39,6 +39,7 @@ void ATank::Fire()
 	);
 
 	Projectile->Launch(LaunchSpeed);
+	LastFireTime = FPlatformTime::Seconds();
 }
 
 

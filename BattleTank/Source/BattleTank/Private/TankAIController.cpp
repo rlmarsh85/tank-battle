@@ -6,10 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Tank.h"
 
-
-
-ATank* ATankAIController::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());
+void ATankAIController::BeginPlay() {
+	Super::BeginPlay();
 }
 
 void ATankAIController::Tick(float DeltaTime) {
@@ -18,46 +16,17 @@ void ATankAIController::Tick(float DeltaTime) {
 
 	AimTowardsPlayer();
 
-}
+	ATank* ControlledTank = Cast<ATank>(GetPawn());
+	ControlledTank->Fire();
 
-
-void ATankAIController::BeginPlay() {
-
-	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("AIontroller Begin Play"))
-
-	auto ThisTank = GetControlledTank();
-	if (!ThisTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Could not find controlled tank in tank AI controller"))
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Found AI controlled tank:%s"), *ThisTank->GetName())
-	}
-
-	auto PlayerTank = GetPlayerTank();
-	if (!PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Could not find player tank in tank AI controller"))
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Found player tank in AI controller"), *PlayerTank->GetName())
-	}
-
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	ATank* PlayerTank = Cast<ATank>((GetWorld()->GetFirstPlayerController()->GetPawn()));
-	
-	if (!PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Could not find player tank in AI Controller"));
-	}
-
-	return PlayerTank;
 }
 
 void ATankAIController::AimTowardsPlayer() const {
-	ATank* PlayerTank = GetPlayerTank();
-	if (PlayerTank && GetControlledTank()) {
-		GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
+
+	ATank* PlayerTank = Cast<ATank>((GetWorld()->GetFirstPlayerController()->GetPawn()));
+	ATank* ControlledTank = Cast<ATank>(GetPawn());
+
+	if (PlayerTank && ControlledTank) {
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 	}
 }
