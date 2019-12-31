@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "Public/Projectile.h"
 #include "Public/TankBarrel.h"
+#include "Public/TankMovementComponent.h"
 
 
 // Sets default values
