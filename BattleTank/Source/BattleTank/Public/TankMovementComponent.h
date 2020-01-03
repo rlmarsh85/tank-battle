@@ -26,12 +26,14 @@ public:
 	UFUNCTION(BlueprintCallable, category = Setup)
 	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-	virtual void RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed);
-
 
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+
+
+	/// Called form the path finding logic by the AI controllers
+	virtual void RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed);
 
 	
 };
