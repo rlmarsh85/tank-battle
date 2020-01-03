@@ -27,6 +27,10 @@ private:
 
 	void AimTowardsPlayer() const;
 
+	void MoveToPlayer();
+
+	float AcceptanceRadius = 3000; // TODO assumed in cm
+
 };
 
 
