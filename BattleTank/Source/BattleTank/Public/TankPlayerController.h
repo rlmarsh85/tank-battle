@@ -18,7 +18,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	ATank* GetControlledTank() const;
 
 	virtual void BeginPlay() override;
 
@@ -44,6 +43,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.0f;
 
+protected:
+	UFUNCTION(BlueprintCallable, category = Setup)
+	ATank* GetControlledTank() const;
 	
 };
 

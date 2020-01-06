@@ -30,7 +30,6 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
-	//TODO: Prevent double input/speed
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
