@@ -2,11 +2,12 @@
 
 
 #include "Public/TankAimingComponent.h"
+#include "Public/TankBarrel.h"
+#include "Public/TankTurret.h"
+
 #include "Components/ActorComponent.h" 
 #include "Containers/Set.h" 
 #include "Kismet/GameplayStatics.h" 
-#include "Public/TankBarrel.h"
-#include "Public/TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -19,7 +20,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
-	if (!Barrel || !Turret) { return;  }
+	if (!ensure(Barrel && Turret)) { return;  }
 	auto ComponentOwner = GetOwner();
 
 	auto BarrelLocation = Barrel->GetComponentLocation();
@@ -57,7 +58,7 @@ void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTankTurret * T
 
 void UTankAimingComponent::MoveBarrel(FVector& AimDirection) {
 
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - BarrelRotation;
@@ -68,7 +69,7 @@ void UTankAimingComponent::MoveBarrel(FVector& AimDirection) {
 void UTankAimingComponent::MoveTurret(FVector & AimDirection)
 {
 
-	if (!Turret) { return;  }
+	if (!ensure(Turret)) { return;  }
 	auto TurretRotation = Turret->GetRelativeRotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - TurretRotation;

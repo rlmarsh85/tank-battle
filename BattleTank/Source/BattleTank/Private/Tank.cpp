@@ -3,11 +3,11 @@
 
 #include "Tank.h"
 #include "Public/TankAimingComponent.h"
-#include "Engine/StaticMeshSocket.h" 
-#include "Engine/World.h"
 #include "Public/Projectile.h"
 #include "Public/TankBarrel.h"
-#include "Public/TankMovementComponent.h"
+
+#include "Engine/StaticMeshSocket.h" 
+#include "Engine/World.h"
 
 
 // Sets default values
@@ -22,14 +22,15 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp,Warning, TEXT("TANKBUG: Calling Tank::BeginPlay()"))
 	
 }
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing tank"))
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeSeconds;
-	if (!Barrel || !isReloaded) { return;  }
+	if (!ensure(Barrel) || !isReloaded) { return;  }
 	
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint,

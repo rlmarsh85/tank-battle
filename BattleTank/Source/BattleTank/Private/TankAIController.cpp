@@ -2,9 +2,10 @@
 
 
 #include "Public/TankAIController.h"
+#include "Public/Tank.h"
+
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
-#include "Public/Tank.h"
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -27,7 +28,7 @@ void ATankAIController::AimTowardsPlayer() const {
 	ATank* PlayerTank = Cast<ATank>((GetWorld()->GetFirstPlayerController()->GetPawn()));
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank && ControlledTank) {
+	if (ensure(PlayerTank && ControlledTank)) {
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 	}
 }
@@ -35,7 +36,7 @@ void ATankAIController::AimTowardsPlayer() const {
 void ATankAIController::MoveToPlayer() {
 	ATank* PlayerTank = Cast<ATank>((GetWorld()->GetFirstPlayerController()->GetPawn()));
 
-	if (PlayerTank) {
+	if (ensure(PlayerTank)) {
 		MoveToActor(PlayerTank, AcceptanceRadius);
 	}
 }
