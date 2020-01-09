@@ -18,7 +18,7 @@ UTankAimingComponent::UTankAimingComponent()
 	
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 {
 	if (!ensure(Barrel && Turret)) { return;  }
 	auto ComponentOwner = GetOwner();

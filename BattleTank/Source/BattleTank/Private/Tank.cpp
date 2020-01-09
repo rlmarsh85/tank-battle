@@ -2,7 +2,6 @@
 
 
 #include "Tank.h"
-#include "Public/TankAimingComponent.h"
 #include "Public/Projectile.h"
 #include "Public/TankBarrel.h"
 
@@ -22,11 +21,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-	UE_LOG(LogTemp,Warning, TEXT("TANKBUG: Calling Tank::BeginPlay()"))
-	
 }
 
 void ATank::Fire()
@@ -52,7 +46,4 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 }
 
 
-void ATank::AimAt(FVector HitLocation) {
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
 

@@ -9,7 +9,6 @@
 
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 
@@ -21,13 +20,12 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	//TODO: Remove me
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000.0f; //TODO: Find sensible default
+	float LaunchSpeed = 4000.0f;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	virtual void Fire();
@@ -43,8 +41,6 @@ private:
 	float ReloadTimeSeconds = 3.0f;
 
 	double LastFireTime = 0;
-
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 protected:
 	// Called when the game starts or when spawned

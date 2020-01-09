@@ -8,8 +8,7 @@
 #include "TankAIController.generated.h"
 
 
-class ATank;
-
+class UTankAimingComponent;
 /**
  * 
  */
@@ -30,6 +29,11 @@ private:
 	void MoveToPlayer();
 
 	float AcceptanceRadius = 3000; // TODO assumed in cm
+
+
+protected:
+
+	UTankAimingComponent* AimingComponent;
 
 };
 

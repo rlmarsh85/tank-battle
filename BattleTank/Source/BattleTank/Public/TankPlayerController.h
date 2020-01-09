@@ -7,7 +7,6 @@
 #include "TankPlayerController.generated.h"
 
 
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -45,11 +44,12 @@ private:
 	float LineTraceRange = 1000000.0f;
 
 protected:
-	UFUNCTION(BlueprintCallable, category = "Setup")
-	ATank* GetControlledTank() const;
 	
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UTankAimingComponent* AimingComponent = nullptr;
+
 };
 
 
