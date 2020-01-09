@@ -44,6 +44,8 @@ private:
 
 	double LastFireTime = 0;
 
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

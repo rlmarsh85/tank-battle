@@ -23,6 +23,8 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	UE_LOG(LogTemp,Warning, TEXT("TANKBUG: Calling Tank::BeginPlay()"))
 	
 }
@@ -51,6 +53,6 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 
 
 void ATank::AimAt(FVector HitLocation) {
-//	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
