@@ -4,6 +4,10 @@
 #include "Public/TankAimingComponent.h"
 #include "Public/TankBarrel.h"
 #include "Public/TankTurret.h"
+#include "Public/Projectile.h"
+
+#include "Engine/StaticMeshSocket.h" 
+#include "Engine/World.h"
 
 #include "Components/ActorComponent.h" 
 #include "Containers/Set.h" 
@@ -14,7 +18,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	
 }
 
@@ -82,4 +86,19 @@ void UTankAimingComponent::MoveTurret(FVector & AimDirection)
 	}
 
 	Turret->RotateTurret(DeltaRotation.Yaw);
+}
+
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeSeconds;
+	if (!ensure(Barrel && ProjectileBlueprint)  || !isReloaded) { return; }
+
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBlueprint,
+		Barrel->GetSocketLocation(FName("Projectile")),
+		Barrel->GetSocketRotation(FName("Projectile"))
+		);
+
+	Projectile->Launch(LaunchSpeed);
+	LastFireTime = FPlatformTime::Seconds();
 }
