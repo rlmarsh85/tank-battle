@@ -31,14 +31,17 @@ public:
 
 	void AimAt(FVector WorldSpaceAim);
 
-	UFUNCTION(BlueprintCallable, category = Setup)
+	UFUNCTION(BlueprintCallable, category = "Setup")
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Fire();
+
+	UFUNCTION(BlueprintCallable, category = "Setup")
+	void SetProjectileBPClass(TSubclassOf <class AProjectile> ClassIn);
 
 
 private:
@@ -49,18 +52,19 @@ private:
 	void MoveBarrel(FVector& AimDirection);
 	void MoveTurret(FVector& AimDirection);
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ReloadTimeSeconds = 3.0f;
 
 	double LastFireTime = 0;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
+
 
 protected:
-	UPROPERTY(BlueprintReadOnly, category=State)
+	UPROPERTY(BlueprintReadOnly, category="State")
 	EFiringStatus AimingStatus = EFiringStatus::Locked;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf < class AProjectile > ProjectileBlueprint = nullptr;
 
 
 		
