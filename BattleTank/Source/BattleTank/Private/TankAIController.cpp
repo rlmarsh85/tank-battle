@@ -20,7 +20,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	AimTowardsPlayer();
 
 	auto ControlledTank = GetPawn();
-	//ControlledTank->Fire();
+	ControlledTank->FindComponentByClass<UTankAimingComponent>()->Fire();
 	//TODO: Fix me
 	MoveToPlayer();
 
