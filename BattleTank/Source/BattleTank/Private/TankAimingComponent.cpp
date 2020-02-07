@@ -35,15 +35,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	//Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (FPlatformTime::Seconds() - LastFireTime < ReloadTimeSeconds){
-		UE_LOG(LogTemp,Warning,TEXT("Is Reloading"))
 		FiringState = EFiringStatus::Reloading;
 	}
 	else if (IsBarrelMoving()) {
-		UE_LOG(LogTemp, Warning, TEXT("Is Moving"))
 		FiringState = EFiringStatus::Ready;
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Is Locked"))
 		FiringState = EFiringStatus::Locked;
 	}
 
