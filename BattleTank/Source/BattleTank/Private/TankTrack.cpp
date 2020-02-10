@@ -6,7 +6,7 @@
 
 
 UTankTrack::UTankTrack() {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankTrack::BeginPlay(){
@@ -15,10 +15,10 @@ void UTankTrack::BeginPlay(){
 }
 
 
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+void UTankTrack::ApplySidewaysForce() {
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
@@ -27,20 +27,22 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Found hit, ladeda"))
+{	
+	DriveTrack();
+	ApplySidewaysForce();	
+	CurrentThrottle = 0.0f;
+}
+
+void UTankTrack::SetThrottle(float Throttle) {
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
 }
 
 
-void UTankTrack::SetThrottle(float Throttle) {
-//	UE_LOG(LogTemp, Warning, TEXT("Throttle on track: %f"), Throttle)
+void UTankTrack::DriveTrack() {
 
-	/// TODO: Clamp input value
-
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 
 	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());	
-//	UE_LOG(LogTemp, Warning, TEXT("%s component being moved with %s force: "), *TankRoot->GetName(),*ForceApplied.ToString())
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
