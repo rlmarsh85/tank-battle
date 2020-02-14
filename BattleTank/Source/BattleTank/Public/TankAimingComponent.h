@@ -31,6 +31,8 @@ public:
 
 	void AimAt(FVector WorldSpaceAim);
 
+	EFiringStatus GetFiringState() const;
+
 	UFUNCTION(BlueprintCallable, category = "Setup")
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
@@ -71,8 +73,6 @@ private:
 
 
 protected:
-	UPROPERTY(BlueprintReadOnly, category="State")
-	EFiringStatus AimingStatus = EFiringStatus::Locked;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf < class AProjectile > ProjectileBlueprint = nullptr;

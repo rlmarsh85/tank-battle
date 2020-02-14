@@ -141,3 +141,8 @@ void UTankAimingComponent::SetProjectileBPClass(TSubclassOf <class AProjectile> 
 	ProjectileBlueprint = ClassIn;
 }
 
+EFiringStatus UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+

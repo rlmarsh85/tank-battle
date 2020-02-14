@@ -20,7 +20,10 @@ void ATankAIController::Tick(float DeltaTime) {
 	AimTowardsPlayer();
 
 	auto ControlledTank = GetPawn();
-	ControlledTank->FindComponentByClass<UTankAimingComponent>()->Fire();
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent->GetFiringState() == EFiringStatus::Locked) {
+		AimingComponent->Fire();
+	}
 	//TODO: Fix me
 	MoveToPlayer();
 
