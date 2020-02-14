@@ -28,12 +28,14 @@ private:
 
 	void MoveToPlayer();
 
-	float AcceptanceRadius = 3000; // TODO assumed in cm
-
 
 protected:
-
+	
 	UTankAimingComponent* AimingComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 5500; 
+
 
 };
 
