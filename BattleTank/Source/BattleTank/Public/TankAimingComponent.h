@@ -12,7 +12,8 @@ UENUM()
 enum class EFiringStatus : uint8 {
 	Reloading,
 	Locked,
-	Ready
+	Ready,
+	OutOfAmmo
 };
 
 //Forward declaration
@@ -36,7 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Setup")
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	
+	UFUNCTION(BlueprintCallable, category = "Firing")
+	int getRoundsLeft() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
@@ -67,6 +69,8 @@ private:
 	virtual void BeginPlay() override;
 
 	virtual bool IsBarrelMoving();
+
+	int roundsLeft = 3;
 
 
 
