@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h" 
+#include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h" 
 #include "Projectile.generated.h"
 
 UCLASS(meta = (BlueprintReadWrite))
@@ -29,6 +31,10 @@ protected:
 private:
 	UProjectileMovementComponent* MovementComponent = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category="Setup")
+	UStaticMeshComponent* CollisionMesh = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UParticleSystemComponent* LaunchBlast = nullptr;
 
 };

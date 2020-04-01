@@ -38,7 +38,7 @@ public:
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	UFUNCTION(BlueprintCallable, category = "Firing")
-	int getRoundsLeft() const;
+	int32 getRoundsLeft() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
@@ -59,8 +59,11 @@ private:
 
 	void MoveBarrelTowards(FVector AimDirection);
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeSeconds = 3.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 roundsLeft = 3;
 
 	double LastFireTime = 0;
 
@@ -69,11 +72,6 @@ private:
 	virtual void BeginPlay() override;
 
 	virtual bool IsBarrelMoving();
-
-	int roundsLeft = 3;
-
-
-
 
 
 protected:

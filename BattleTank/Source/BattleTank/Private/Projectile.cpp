@@ -13,6 +13,14 @@ AProjectile::AProjectile()
 	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement Component"));
 	MovementComponent->bAutoActivate = false;
 
+	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Projectile Mesh"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(false);
+	CollisionMesh->SetVisibility(true);
+
+	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Particles"));
+	LaunchBlast->SetupAttachment(CollisionMesh);
+
 }
 
 // Called when the game starts or when spawned

@@ -144,7 +144,7 @@ void UTankAimingComponent::SetProjectileBPClass(TSubclassOf <class AProjectile> 
 	ProjectileBlueprint = ClassIn;
 }
 
-int UTankAimingComponent::getRoundsLeft() const
+int32 UTankAimingComponent::getRoundsLeft() const
 {
 	return roundsLeft;
 }
