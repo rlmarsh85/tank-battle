@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Math/UnrealMathUtility.h"
 #include "Tank.h"
 
 // Sets default values
@@ -14,6 +14,17 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+float ATank::TakeDamage(float DamageAmount,struct FDamageEvent const& DamageEvent,class AController* EventInstigator,AActor* DamageCauser) 
+{
+
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	auto DamageAssigned = FMath::Clamp(DamagePoints, 0, CurrentHealth);
+
+	CurrentHealth -= DamageAssigned;
+
+	return DamageAssigned;
 }
 
 
