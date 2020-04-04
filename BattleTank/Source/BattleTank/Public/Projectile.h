@@ -7,6 +7,7 @@
 #include "GameFramework/ProjectileMovementComponent.h" 
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h" 
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 UCLASS(meta = (BlueprintReadWrite))
@@ -39,6 +40,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	URadialForceComponent* ExplosionForce = nullptr;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
