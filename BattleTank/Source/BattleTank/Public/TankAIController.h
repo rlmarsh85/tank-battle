@@ -20,6 +20,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	void BeginPlay();
 
+
+
 private:
 
 	virtual void Tick(float DeltaTime) override;
@@ -27,6 +29,11 @@ private:
 	void AimTowardsPlayer() const;
 
 	void MoveToPlayer();
+
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 
 protected:

@@ -3,6 +3,7 @@
 
 #include "Public/TankAIController.h"
 #include "Public/TankAimingComponent.h"
+#include "Public/Tank.h"
 
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
@@ -45,4 +46,19 @@ void ATankAIController::MoveToPlayer() {
 	if (ensure(PlayerTank)) {
 		MoveToActor(PlayerTank, AcceptanceRadius);
 	}
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return;  }
+
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
+	}
+}
+
+void ATankAIController::OnPossessedTankDeath() {
+	UE_LOG(LogTemp, Warning, TEXT("Handling Tank Death"))
 }
