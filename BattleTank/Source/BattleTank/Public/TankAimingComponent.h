@@ -41,7 +41,7 @@ public:
 	int32 getRoundsLeft() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000.0f;
+	float LaunchSpeed = 8000.0f;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Fire();
@@ -60,10 +60,10 @@ private:
 	void MoveBarrelTowards(FVector AimDirection);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeSeconds = 3.0f;
+	float ReloadTimeSeconds = 2.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		int32 roundsLeft = 3;
+	int32 roundsLeft = 30;
 
 	double LastFireTime = 0;
 
