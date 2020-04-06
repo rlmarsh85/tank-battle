@@ -35,9 +35,10 @@ void ATankAIController::AimTowardsPlayer() const {
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 
-	if (ensure(PlayerTank && ControlledTank)) {;
+	if (PlayerTank && ControlledTank) {
 		ControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(PlayerTank->GetActorLocation());
 	}
+	
 }
 
 void ATankAIController::MoveToPlayer() {
