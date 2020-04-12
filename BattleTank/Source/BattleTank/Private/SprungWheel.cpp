@@ -15,10 +15,15 @@ ASprungWheel::ASprungWheel()
 	Constraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("PhysicsConstraint"));
 	SetRootComponent(Constraint);
 
-	WheelMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
-	WheelMesh->SetNotifyRigidBodyCollision(true);
-	WheelMesh->SetVisibility(true);
-	WheelMesh->SetupAttachment(Constraint);
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
+	Axle->SetupAttachment(Constraint);
+
+	WheelMesh = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
+	WheelMesh->SetupAttachment(Axle);
+
+
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
+	AxleWheelConstraint->SetupAttachment(Axle);
 
 }
 
@@ -40,7 +45,8 @@ void ASprungWheel::SetupConstraints()
 		UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 		if (BodyRoot) {
 			UE_LOG(LogTemp, Warning, TEXT("Found BodyRoot"), *GetAttachParentActor()->GetName())
-			Constraint->SetConstrainedComponents(BodyRoot, NAME_None, WheelMesh, NAME_None);
+			Constraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
+			AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, WheelMesh, NAME_None);
 		}
 
 	}
