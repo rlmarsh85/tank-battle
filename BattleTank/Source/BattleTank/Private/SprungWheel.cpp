@@ -29,6 +29,10 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (GetAttachParentActor()) {
+		UE_LOG(LogTemp,Warning, TEXT("parent name: %s"), *GetAttachParentActor()->GetName())
+	}
+
 }
 
 // Called every frame
