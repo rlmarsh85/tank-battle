@@ -29,13 +29,11 @@ public:
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		UStaticMeshComponent* WheelMesh = nullptr;
+	UStaticMeshComponent* WheelMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		UStaticMeshComponent* MassMesh = nullptr;
+	UPhysicsConstraintComponent* Constraint = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		UPhysicsConstraintComponent* Constraint = nullptr;
-
+	void SetupConstraints();
 
 };
