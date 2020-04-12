@@ -4,7 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
+
+#include "public/SprungWheel.h"
+#include "public/SpawnPoint.h"
+
 #include "TankTrack.generated.h"
+
 
 /**
  * TankTrack is used to set maximum driving force and to apply forces to the tank
@@ -28,16 +33,9 @@ public:
 
 private:
 	UTankTrack();
-	virtual void BeginPlay() override;
 
-	void ApplySidewaysForce();
+	void DriveTrack(float CurrentThrottle);
 
-	float CurrentThrottle = 0.0f;
-
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, 
-		FVector NormalImpulse, const FHitResult& Hit);
-
-	void DriveTrack();
+	TArray<ASprungWheel*> GetWheels() const;
 	
 };
