@@ -4,6 +4,9 @@
 
 #include "Components/SphereComponent.h" 
 #include "PhysicsEngine/PhysicsConstraintComponent.h" 
+#include "Components/PrimitiveComponent.h" 
+#include "Math/Vector.h" 
+#include "Engine/EngineTypes.h" 
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -43,5 +46,12 @@ private:
 	UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
 	void SetupConstraints();
+
+	void ApplyForce();
+
+	float TotalForceMagnitudeThisFrame;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,FVector NormalImpulse, const FHitResult& Hit);
 
 };
